@@ -771,7 +771,7 @@ func Test_validateCredentialProviderConfig(t *testing.T) {
 					},
 				},
 			},
-			expectErr: `providers.defaultCacheDuration: Required value: defaultCacheDuration is required`,
+			expectErr: `providers.defaultCacheDuration: Required value`,
 		},
 		{
 			name: "name contains '/'",
@@ -861,7 +861,7 @@ func Test_validateCredentialProviderConfig(t *testing.T) {
 					},
 				},
 			},
-			expectErr: "providers.apiVersion: Required value: apiVersion is required",
+			expectErr: "providers.apiVersion: Required value",
 		},
 		{
 			name: "invalid apiVersion",
@@ -889,7 +889,7 @@ func Test_validateCredentialProviderConfig(t *testing.T) {
 					},
 				},
 			},
-			expectErr: "providers.defaultCacheDuration: Invalid value: -1m0s: defaultCacheDuration must be greater than or equal to 0",
+			expectErr: "providers.defaultCacheDuration: Invalid value: \"-1m0s\": defaultCacheDuration must be greater than or equal to 0",
 		},
 		{
 			name: "invalid match image",
@@ -953,7 +953,7 @@ func Test_validateCredentialProviderConfig(t *testing.T) {
 				},
 			},
 			saTokenForCredentialProviders: true,
-			expectErr:                     `providers.tokenAttributes.serviceAccountTokenAudience: Required value: serviceAccountTokenAudience is required`,
+			expectErr:                     `providers.tokenAttributes.serviceAccountTokenAudience: Required value`,
 		},
 		{
 			name: "token attributes not nil but empty ServiceAccountTokenRequired",
@@ -972,7 +972,7 @@ func Test_validateCredentialProviderConfig(t *testing.T) {
 				},
 			},
 			saTokenForCredentialProviders: true,
-			expectErr:                     `providers.tokenAttributes.requireServiceAccount: Required value: requireServiceAccount is required`,
+			expectErr:                     `providers.tokenAttributes.requireServiceAccount: Required value`,
 		},
 		{
 			name: "required service account annotation keys not qualified name (same validation as metav1.ObjectMeta)",
@@ -1073,7 +1073,7 @@ func Test_validateCredentialProviderConfig(t *testing.T) {
 				},
 			},
 			saTokenForCredentialProviders: true,
-			expectErr:                     `providers.tokenAttributes: Invalid value: []string{"now-with-dashes/simple-2"}: annotation keys cannot be both required and optional`,
+			expectErr:                     `providers.tokenAttributes: Invalid value: ["now-with-dashes/simple-2"]: annotation keys cannot be both required and optional`,
 		},
 		{
 			name: "required annotation keys set when requireServiceAccount is false",

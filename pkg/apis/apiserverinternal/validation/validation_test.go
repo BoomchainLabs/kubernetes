@@ -280,7 +280,7 @@ func TestValidateCommonVersion(t *testing.T) {
 			}},
 			CommonEncodingVersion: nil,
 		},
-		expectedErr: "Invalid value: \"null\": the common encoding version is v1alpha1",
+		expectedErr: "Invalid value: null: the common encoding version is v1alpha1",
 	}, {
 		status: apiserverinternal.StorageVersionStatus{
 			StorageVersions: []apiserverinternal.ServerStorageVersion{{
@@ -360,14 +360,14 @@ func TestValidateStorageVersionCondition(t *testing.T) {
 			Status:  "True",
 			Message: "unknown",
 		}},
-		expectedErr: "Required value: reason cannot be empty",
+		expectedErr: "Required value",
 	}, {
 		conditions: []apiserverinternal.StorageVersionCondition{{
 			Type:   "fea",
 			Status: "True",
 			Reason: "unknown",
 		}},
-		expectedErr: "Required value: message cannot be empty",
+		expectedErr: "Required value",
 	}, {
 		conditions: []apiserverinternal.StorageVersionCondition{{
 			Type:    "fea",
