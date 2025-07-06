@@ -36,7 +36,7 @@ import (
 	authenticationcel "k8s.io/apiserver/pkg/authentication/cel"
 	authorizationcel "k8s.io/apiserver/pkg/authorization/cel"
 	certutil "k8s.io/client-go/util/cert"
-	"k8s.io/utils/pointer"
+	"k8s.io/utils/ptr"
 )
 
 func TestValidateAuthenticationConfiguration(t *testing.T) {
@@ -69,7 +69,7 @@ func TestValidateAuthenticationConfiguration(t *testing.T) {
 						ClaimMappings: api.ClaimMappings{
 							Username: api.PrefixedClaimOrExpression{
 								Claim:  "sub",
-								Prefix: pointer.String("prefix"),
+								Prefix: ptr.To("prefix"),
 							},
 						},
 					},
@@ -87,7 +87,7 @@ func TestValidateAuthenticationConfiguration(t *testing.T) {
 						ClaimMappings: api.ClaimMappings{
 							Username: api.PrefixedClaimOrExpression{
 								Claim:  "sub",
-								Prefix: pointer.String("prefix"),
+								Prefix: ptr.To("prefix"),
 							},
 						},
 					},
@@ -114,7 +114,7 @@ func TestValidateAuthenticationConfiguration(t *testing.T) {
 						ClaimMappings: api.ClaimMappings{
 							Username: api.PrefixedClaimOrExpression{
 								Claim:  "sub",
-								Prefix: pointer.String("prefix"),
+								Prefix: ptr.To("prefix"),
 							},
 						},
 					},
@@ -133,7 +133,7 @@ func TestValidateAuthenticationConfiguration(t *testing.T) {
 						ClaimMappings: api.ClaimMappings{
 							Username: api.PrefixedClaimOrExpression{
 								Claim:  "sub",
-								Prefix: pointer.String("prefix"),
+								Prefix: ptr.To("prefix"),
 							},
 						},
 					},
@@ -153,7 +153,7 @@ func TestValidateAuthenticationConfiguration(t *testing.T) {
 						ClaimMappings: api.ClaimMappings{
 							Username: api.PrefixedClaimOrExpression{
 								Claim:  "claim",
-								Prefix: pointer.String("prefix"),
+								Prefix: ptr.To("prefix"),
 							},
 						},
 					},
@@ -183,7 +183,7 @@ func TestValidateAuthenticationConfiguration(t *testing.T) {
 						ClaimMappings: api.ClaimMappings{
 							Username: api.PrefixedClaimOrExpression{
 								Claim:  "claim",
-								Prefix: pointer.String("prefix"),
+								Prefix: ptr.To("prefix"),
 							},
 						},
 					},
@@ -208,7 +208,7 @@ func TestValidateAuthenticationConfiguration(t *testing.T) {
 						},
 						ClaimMappings: api.ClaimMappings{
 							Username: api.PrefixedClaimOrExpression{
-								Prefix: pointer.String("prefix"),
+								Prefix: ptr.To("prefix"),
 							},
 						},
 					},
@@ -234,7 +234,7 @@ func TestValidateAuthenticationConfiguration(t *testing.T) {
 						ClaimMappings: api.ClaimMappings{
 							Username: api.PrefixedClaimOrExpression{
 								Claim:  "sub",
-								Prefix: pointer.String("prefix"),
+								Prefix: ptr.To("prefix"),
 							},
 						},
 						UserValidationRules: []api.UserValidationRule{
@@ -264,7 +264,7 @@ func TestValidateAuthenticationConfiguration(t *testing.T) {
 						ClaimMappings: api.ClaimMappings{
 							Username: api.PrefixedClaimOrExpression{
 								Claim:  "sub",
-								Prefix: pointer.String("prefix"),
+								Prefix: ptr.To("prefix"),
 							},
 						},
 					},
@@ -653,7 +653,7 @@ func TestValidateAuthenticationConfiguration(t *testing.T) {
 						ClaimMappings: api.ClaimMappings{
 							Username: api.PrefixedClaimOrExpression{
 								Claim:  "sub",
-								Prefix: pointer.String("prefix"),
+								Prefix: ptr.To("prefix"),
 							},
 						},
 					},
@@ -685,7 +685,7 @@ func TestValidateIssuerURL(t *testing.T) {
 		{
 			name: "url is empty",
 			in:   "",
-			want: "issuer.url: Required value: URL is required",
+			want: "issuer.url: Required value",
 		},
 		{
 			name: "url parse error",
@@ -857,7 +857,7 @@ func TestValidateAudiences(t *testing.T) {
 		{
 			name: "audience is empty",
 			in:   []string{""},
-			want: "issuer.audiences[0]: Required value: audience can't be empty",
+			want: "issuer.audiences[0]: Required value",
 		},
 		{
 			name:        "invalid match policy with single audience",
@@ -900,7 +900,7 @@ func TestValidateAudiences(t *testing.T) {
 			name:        "multiple audiences set when structured authn feature is disabled",
 			in:          []string{"audience1", "audience2"},
 			matchPolicy: "MatchAny",
-			want:        `issuer.audiences: Invalid value: []string{"audience1", "audience2"}: multiple audiences are not supported when StructuredAuthenticationConfiguration feature gate is disabled`,
+			want:        `issuer.audiences: Invalid value: ["audience1","audience2"]: multiple audiences are not supported when StructuredAuthenticationConfiguration feature gate is disabled`,
 		},
 	}
 
@@ -1137,7 +1137,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Expression: "claims.username",
-					Prefix:     pointer.String("prefix"),
+					Prefix:     ptr.To("prefix"),
 				},
 			},
 			structuredAuthnFeatureEnabled: true,
@@ -1170,7 +1170,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				Groups: api.PrefixedClaimOrExpression{
 					Claim:      "claim",
@@ -1185,11 +1185,11 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				Groups: api.PrefixedClaimOrExpression{
 					Expression: "claims.groups",
-					Prefix:     pointer.String("prefix"),
+					Prefix:     ptr.To("prefix"),
 				},
 			},
 			structuredAuthnFeatureEnabled: true,
@@ -1200,7 +1200,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				Groups: api.PrefixedClaimOrExpression{
 					Claim: "claim",
@@ -1214,7 +1214,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				Groups: api.PrefixedClaimOrExpression{
 					Expression: "foo.bar",
@@ -1230,7 +1230,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				UID: api.ClaimOrExpression{
 					Claim:      "claim",
@@ -1245,7 +1245,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				UID: api.ClaimOrExpression{
 					Expression: "foo.bar",
@@ -1261,7 +1261,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				Extra: []api.ExtraMapping{
 					{Key: "", ValueExpression: "claims.extra"},
@@ -1275,21 +1275,21 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				Extra: []api.ExtraMapping{
 					{Key: "example.org/foo", ValueExpression: ""},
 				},
 			},
 			structuredAuthnFeatureEnabled: true,
-			want:                          `issuer.claimMappings.extra[0].valueExpression: Required value: valueExpression is required`,
+			want:                          `issuer.claimMappings.extra[0].valueExpression: Required value`,
 		},
 		{
 			name: "extra mapping value expression is invalid",
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				Extra: []api.ExtraMapping{
 					{Key: "example.org/foo", ValueExpression: "foo.bar"},
@@ -1317,7 +1317,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				Groups: api.PrefixedClaimOrExpression{
 					Expression: "foo.bar",
@@ -1333,7 +1333,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				UID: api.ClaimOrExpression{
 					Expression: "foo.bar",
@@ -1349,7 +1349,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				UID: api.ClaimOrExpression{
 					Claim: "claim",
@@ -1363,7 +1363,7 @@ func TestValidateClaimMappings(t *testing.T) {
 			in: api.ClaimMappings{
 				Username: api.PrefixedClaimOrExpression{
 					Claim:  "claim",
-					Prefix: pointer.String("prefix"),
+					Prefix: ptr.To("prefix"),
 				},
 				Extra: []api.ExtraMapping{
 					{Key: "example.org/foo", ValueExpression: "claims.extra"},
@@ -1655,7 +1655,7 @@ func TestValidateUserValidationRules(t *testing.T) {
 			name:                          "user info validation rule, expression is empty",
 			in:                            []api.UserValidationRule{{}},
 			structuredAuthnFeatureEnabled: true,
-			want:                          "issuer.userValidationRules[0].expression: Required value: expression is required",
+			want:                          "issuer.userValidationRules[0].expression: Required value",
 		},
 		{
 			name: "duplicate expression",
