@@ -1,10 +1,8 @@
 # See the OWNERS docs at https://go.k8s.io/owners
 
 approvers:
-- apelisse
-- stewart-yu
-- thockin
+  - sig-node-approvers
 reviewers:
-- apelisse
-- stewart-yu
-- thockin
+  - sig-node-reviewers
+labels:
+  - sig/node
